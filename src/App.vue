@@ -53,8 +53,7 @@
 
 <script>
 
-	import {getData} from "./service/getData";
-  import axios from "axios";
+	import {getFilms} from "./service";
   import debounce from "lodash/debounce";
 
 	export default {
@@ -85,7 +84,7 @@
 				if (this.isLoading) return;
 
 				this.loading = true;
-				axios.get(`https://www.omdbapi.com/?s=${v}&type=movie&r=json&apikey=fabd0e57`)
+        getFilms(v)
 					.then(({data}) => {
 						if (data.Response === 'True') {
 							const {Search} = data;
@@ -116,7 +115,7 @@
       }
 		},
 		created() {
-			getData()
+			getFilms()
 				.then(data => {
 					this.films = data;
 					this.createFilmStructure(data);
