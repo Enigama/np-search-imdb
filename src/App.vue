@@ -31,7 +31,7 @@
       >
         <v-card
           v-for="film in films"
-          :key="film.Title"
+          :key="film.imdbID"
           class="ma-2 flex-grow-1"
           link
           :href="'https://www.imdb.com/title/'+film.imdbID"
@@ -88,10 +88,12 @@
 					.then(({data}) => {
 						if (data.Response === 'True') {
 							const {Search} = data;
+							this.items = [];
               this.createFilmStructure(Search);
               this.films = Search;
 						} else {
 							this.films = [];
+							this.items = [];
 							this.createFilmStructure();
 						}
 					})
@@ -114,7 +116,7 @@
 				}
       }
 		},
-		created() {
+    created() {
 			getFilms()
 				.then(data => {
 					this.films = data;
